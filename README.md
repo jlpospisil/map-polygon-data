@@ -3,6 +3,7 @@ Getting Started
 1. Install dependencies:
     ```
     brew install wget gdal
+    cd js && npm install
     ```
     
 2. Create and prepare a new python virtualenv

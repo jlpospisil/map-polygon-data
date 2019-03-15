@@ -5,18 +5,27 @@ const app = express();
 const port = 4000;
 
 const levelData = {
-  zip3: {
-    data: require('./zip3.json'),
-    idPath: ['properties', 'STATE'],
-  },
+  zip3: require('./zip3.json'),
+  // zip5: require('./zip5.json'),
 };
 
 app.get('/:level/:id', (req, res) => {
   const { level, id } = req.params;
-  const dataObject = levelData[level];
-  const { idPath, data } = dataObject;
+  const data = levelData[level];
   let { features: polygonData } = data;
-  polygonData = polygonData.filter(p => _.get(p, idPath) === id);
+
+  switch(level.toLowerCase()) {
+    case 'zip3':
+      polygonData = polygonData.filter(p => _.get(p, ['properties', 'STATE']) === id);
+      break;
+
+    case 'zip5':
+      polygonData = polygonData.filter(p => _.get(p, ['properties', 'ZIP']).startsWith(id));
+      break;
+
+    default:
+      polygonData = [];
+  }
 
   if (polygonData.length === 0) {
     return res.sendStatus(404);
