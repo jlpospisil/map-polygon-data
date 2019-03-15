@@ -6,7 +6,7 @@ const port = 4000;
 
 const levelData = {
   zip3: require('./zip3.json'),
-  // zip5: require('./zip5.json'),
+  // zip5: require('./zip5.json'), // TODO: parse large json file
 };
 
 app.get('/:level/:id', (req, res) => {
