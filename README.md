@@ -9,10 +9,6 @@ Getting Started
     python get_data.py
     ```
 
-Shapefiles
-------------------------------------------
-https://www.baruch.cuny.edu/confluence/display/geoportal/ESRI+USA+Data
-
 
 Shapefile Information
 ------------------------------------------
