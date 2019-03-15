@@ -3,7 +3,7 @@ import os
 
 urls = {
     'zip3': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/zip3.zip',
-    # 'zip5': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/zip_poly.zip',
+    'zip5': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/zip_poly.zip',
 }
 
 dir = os.path.abspath(os.path.dirname(__file__))

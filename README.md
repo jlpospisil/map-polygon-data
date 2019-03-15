@@ -4,7 +4,15 @@ Getting Started
     ```
     brew install wget gdal
     ```
-2. Run the following command to download the shapefiles and convert them to geoJSON:
+    
+2. Create and prepare a new python virtualenv
+    ```
+    python3 -m venv venv
+    source venv/bin/activate    
+    pip install -r requirements.txt
+    ```
+    
+3. Run the following command to download the shapefiles and convert them to geoJSON:
     ```
     python get_data.py
     ```
