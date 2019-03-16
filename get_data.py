@@ -2,6 +2,7 @@ import subprocess
 import os
 
 urls = {
+    'counties': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/counties.zip',
     'zip3': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/zip3.zip',
     'zip5': 'http://faculty.baruch.cuny.edu/geoportal/data/esri/usa/census/zip_poly.zip',
 }

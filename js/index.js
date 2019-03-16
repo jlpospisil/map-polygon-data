@@ -5,9 +5,12 @@ const app = express();
 const port = 4000;
 
 const levelData = {
+  counties: require('./counties.json'),
   zip3: require('./zip3.json'),
   // zip5: require('./zip5.json'), // TODO: parse large json file
 };
+
+const states = require('./states.json');
 
 app.get('/:level/:id', (req, res) => {
   const { level, id } = req.params;
@@ -15,8 +18,12 @@ app.get('/:level/:id', (req, res) => {
   let { features: polygonData } = data;
 
   switch(level.toLowerCase()) {
+    case 'counties':
+      polygonData = polygonData.filter(p => _.get(p, ['properties', 'STATE_NAME'], '').toLowerCase() === _.get(states, id, '').toLowerCase());
+      break;
+
     case 'zip3':
-      polygonData = polygonData.filter(p => _.get(p, ['properties', 'STATE']) === id);
+      polygonData = polygonData.filter(p => _.get(p, ['properties', 'STATE'], '').toLowerCase() === id.toLowerCase());
       break;
 
     case 'zip5':

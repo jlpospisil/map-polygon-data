@@ -1,9 +1,11 @@
 venv
 .idea
 downloads
+js/counties.json
 js/zip3.json
 js/zip5.json
 data/county-polygons
 data/zip3
 data/zip5
+data/counties
 js/node_modules
