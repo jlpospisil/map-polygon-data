@@ -62,6 +62,8 @@ def get_api_data(level, id):
 
 if __name__ == "__main__":
     for state in states:
+        state_id = state.get('id')
+
         # Process county data
         if not os.path.exists(counties_dir):
             os.mkdir(counties_dir)
@@ -73,7 +75,6 @@ if __name__ == "__main__":
         # Process zip3 data
         if not os.path.exists(zip3_dir):
             os.mkdir(zip3_dir)
-        state_id = state.get('id')
         data = get_api_data('zip3', state_id)
         if len(data) > 0:
             file = os.path.join(zip3_dir, state_id)
