@@ -53,7 +53,7 @@ def get_api_data(level, id):
 
     elif level == 'counties':
         polygons = [{
-            'id': '{} - {}'.format(p.get('properties', {}).get('STATE_NAME'), p.get('properties', {}).get('NAME')),
+            'id': p.get('properties', {}).get('NAME'),
             'polygons': create_polygons_from_geometry(p.get('geometry', {}))
         } for p in polygons if p.get('properties', {}).get('STATE_NAME', '').lower() == state_name(id).lower()]
 
