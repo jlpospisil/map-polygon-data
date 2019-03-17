@@ -2,9 +2,15 @@ import os
 import pickle
 import json
 
-levels = ['zip3', 'zip5']
-dir = os.path.abspath(os.path.dirname(__file__))
+levels = ['counties', 'zip3', 'zip5']
 geojson = dict()
+dir = os.path.abspath(os.path.dirname(__file__))
+data_dir = os.path.join(dir, 'data')
+counties_dir = os.path.join(data_dir, 'counties')
+zip3_dir = os.path.join(data_dir, 'zip3')
+zip5_dir = os.path.join(data_dir, 'zip5')
+states_file = os.path.join(data_dir, 'state-ids')
+states = pickle.load(open(states_file, 'rb'))
 
 for l in levels:
     file = os.path.join(dir, 'data', '{}.json'.format(l))
@@ -25,6 +31,11 @@ def create_polygons_from_geometry(geometry):
     return [[{'lat': p[1], 'lng': p[0]} for p in c] for c in coordinates]
 
 
+def state_name(state_id):
+    state = next(s for s in states if s['id'] == state_id)
+    return state.get('name', '') if state else ''
+
+
 def get_api_data(level, id):
     polygons = geojson[level]
 
@@ -40,31 +51,39 @@ def get_api_data(level, id):
             'polygons': create_polygons_from_geometry(p.get('geometry', {}))
         } for p in polygons if p.get('properties', {}).get('STATE', '') == id]
 
+    elif level == 'counties':
+        polygons = [{
+            'id': '{} - {}'.format(p.get('properties', {}).get('STATE_NAME'), p.get('properties', {}).get('NAME')),
+            'polygons': create_polygons_from_geometry(p.get('geometry', {}))
+        } for p in polygons if p.get('properties', {}).get('STATE_NAME', '').lower() == state_name(id).lower()]
+
     return polygons
 
 
 if __name__ == "__main__":
-    dir = os.path.abspath(os.path.dirname(__file__))
-    data_dir = os.path.join(dir, 'data')
-    zip3_dir = os.path.join(data_dir, 'zip3')
-    zip5_dir = os.path.join(data_dir, 'zip5')
-    states_file = os.path.join(data_dir, 'state-ids')
-    states = pickle.load(open(states_file, 'rb'))
-
-    os.mkdir(zip3_dir)
-    os.mkdir(zip5_dir)
-
     for state in states:
+        # Process county data
+        if not os.path.exists(counties_dir):
+            os.mkdir(counties_dir)
+        data = get_api_data('counties', state_id)
+        if len(data) > 0:
+            file = os.path.join(counties_dir, state_id)
+            pickle.dump(data, open(file, 'wb'))
+
         # Process zip3 data
+        if not os.path.exists(zip3_dir):
+            os.mkdir(zip3_dir)
         state_id = state.get('id')
         data = get_api_data('zip3', state_id)
-        file = os.path.join(zip3_dir, state_id)
-        pickle.dump(data, open(file, 'wb'))
-
-        # TODO: process county data here
+        if len(data) > 0:
+            file = os.path.join(zip3_dir, state_id)
+            pickle.dump(data, open(file, 'wb'))
 
         # For each zip3, process each zip5
         for zip3 in [d.get('id') for d in data]:
+            if not os.path.exists(zip5_dir):
+                os.mkdir(zip5_dir)
             data = get_api_data('zip5', zip3)
-            file = os.path.join(zip5_dir, zip3)
-            pickle.dump(data, open(file, 'wb'))
+            if len(data) > 0:
+                file = os.path.join(zip5_dir, zip3)
+                pickle.dump(data, open(file, 'wb'))
