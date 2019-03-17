@@ -9,7 +9,7 @@ urls = {
 
 dir = os.path.abspath(os.path.dirname(__file__))
 downloads_dir = os.path.join(dir, 'downloads')
-js_dir = os.path.join(dir, 'js')
+json_dir = os.path.join(dir, 'data')
 
 if not os.path.exists(downloads_dir):
     os.mkdir(downloads_dir)
@@ -28,6 +28,6 @@ for level in urls:
 
     # Convert the shapefile to geoJSON
     data_dir = os.path.join(downloads_dir, level)
-    geojson_file = os.path.join(js_dir, '{}.json'.format(level))
+    geojson_file = os.path.join(json_dir, '{}.json'.format(level))
     cmd = 'ogr2ogr -f geoJSON {} *.shp'.format(geojson_file)
     subprocess.call('cd {} && {}'.format(data_dir, cmd), shell=True)

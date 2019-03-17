@@ -3,7 +3,6 @@ Getting Started
 1. Install dependencies:
     ```
     brew install wget gdal
-    cd js && npm install
     ```
     
 2. Create and prepare a new python virtualenv
@@ -13,9 +12,10 @@ Getting Started
     pip install -r requirements.txt
     ```
     
-3. Run the following command to download the shapefiles and convert them to geoJSON:
+3. Run the following commands to download the shapefiles and convert them to geoJSON:
     ```
-    python get_data.py
+    python download_shapefiles.py
+    python process_shapefiles.py
     ```
 
 

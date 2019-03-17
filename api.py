@@ -8,8 +8,7 @@ app = Flask(__name__)
 
 @app.route('/<data1>/')
 @app.route('/<data1>/<data2>')
-@app.route('/<data1>/<data2>/<data3>')
-def get_api_dta(data1, data2=None, data3=None):
+def get_api_dta(data1, data2=None):
     try:
         dir = os.path.dirname(__file__)
         data_dir = os.path.join(dir, 'data')
@@ -17,9 +16,6 @@ def get_api_dta(data1, data2=None, data3=None):
 
         if data2:
             file = os.path.join(file, data2)
-
-        if data3:
-            file = os.path.join(file, data3)
 
         data = pickle.load(open(file, 'rb'))
 
