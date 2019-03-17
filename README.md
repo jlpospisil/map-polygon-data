@@ -12,7 +12,7 @@ Getting Started
     pip install -r requirements.txt
     ```
     
-3. Run the following commands to download the shapefiles and convert them to geoJSON:
+3. Run the following commands to download the shapefiles and convert them to pickled python data:
     ```
     python download_shapefiles.py
     python process_shapefiles.py
@@ -25,6 +25,6 @@ Shapefile Information
 Downloads:
     https://www.baruch.cuny.edu/confluence/display/geoportal/ESRI+USA+Data
 
-Manually convert shapefile to pickled python data:
+Manually convert shapefile to geoJSON:
 
     ogr2ogr -f geoJSON output.json input.shp
