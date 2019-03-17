@@ -25,6 +25,6 @@ Shapefile Information
 Downloads:
     https://www.baruch.cuny.edu/confluence/display/geoportal/ESRI+USA+Data
 
-Manually convert shapefile to geoJSON:
+Manually convert shapefile to pickled python data:
 
     ogr2ogr -f geoJSON output.json input.shp
